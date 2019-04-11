@@ -138,20 +138,20 @@ namespace EasySurvivalScripts
 
         void RotateCamera()
         {
-            float mouseX = Input.GetAxis(MouseXInput) * (mouseSensitivity * Time.deltaTime);
-            float mouseY = Input.GetAxis(MouseYInput) * (mouseSensitivity * Time.deltaTime);
-            Vector3 eulerRotation = transform.eulerAngles;
+            //float mouseX = Input.GetAxis(MouseXInput) * (mouseSensitivity * Time.deltaTime);
+            //float mouseY = Input.GetAxis(MouseYInput) * (mouseSensitivity * Time.deltaTime);
+            //Vector3 eulerRotation = transform.eulerAngles;
 
-            xClamp += mouseY;
+            //xClamp += mouseY;
 
-            if(cameraPerspective == CameraPerspective.FirstPerson)
-                xClamp = Mathf.Clamp(xClamp, FPS_MinMaxAngles.x, FPS_MinMaxAngles.y);
-            else
-                xClamp = Mathf.Clamp(xClamp, TPS_MinMaxAngles.x, TPS_MinMaxAngles.y);
+            //if (cameraPerspective == CameraPerspective.FirstPerson)
+            //    xClamp = Mathf.Clamp(xClamp, FPS_MinMaxAngles.x, FPS_MinMaxAngles.y);
+            //else
+            //    xClamp = Mathf.Clamp(xClamp, TPS_MinMaxAngles.x, TPS_MinMaxAngles.y);
 
-            eulerRotation.x = -xClamp;
-            transform.eulerAngles = eulerRotation;
-            FPSController.Rotate(Vector3.up * mouseX);
+            //eulerRotation.x = -xClamp;
+            //transform.eulerAngles = eulerRotation;
+            //FPSController.Rotate(Vector3.up * mouseX);
         }
 
         private void OnDrawGizmosSelected()
