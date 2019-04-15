@@ -52,7 +52,7 @@ namespace EasySurvivalScripts
         // Use this for initialization
         void Start()
         {
-            characterController = GetComponent<CharacterController>();
+            characterController = gameObject.GetComponentInParent<CharacterController>();
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
 
