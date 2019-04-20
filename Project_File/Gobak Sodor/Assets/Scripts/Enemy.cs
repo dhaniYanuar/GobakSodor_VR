@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public Transform player;
 
-    private float enemySpeed = 7f;
+    private float enemySpeed = 9f;
     private float roamSpeed = 15f;
     private float minDist = 60f;
     [SerializeField]private int direction = 1;
