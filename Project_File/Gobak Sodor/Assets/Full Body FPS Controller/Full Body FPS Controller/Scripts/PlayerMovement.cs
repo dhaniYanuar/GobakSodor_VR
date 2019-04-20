@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace EasySurvivalScripts
 {
@@ -67,6 +69,7 @@ namespace EasySurvivalScripts
 
             //sync footsteps with controller
             PlayFootstepSounds();
+
         }
 
         void HandlePlayerControls()
@@ -95,7 +98,7 @@ namespace EasySurvivalScripts
                     else
                         playerStates = PlayerStates.Running;
 
-                    _footstepDelay = (2/_speed);
+                    _footstepDelay = (4/_speed);
                 }
             }
             else
@@ -196,5 +199,10 @@ namespace EasySurvivalScripts
             }
         }
 
+        public void GameOver()
+        {
+            SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
+            sceneLoader.ChangeScene("MainMenu");
+        }
     }
 }
