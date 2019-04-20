@@ -7,9 +7,9 @@ public class Enemy : MonoBehaviour
     public Transform player;
 
     private float enemySpeed = 7f;
+    private float roamSpeed = 15f;
     private float minDist = 60f;
     [SerializeField]private int direction = 1;
-
 
     void Update()
     {
@@ -23,6 +23,10 @@ public class Enemy : MonoBehaviour
         {
             transform.LookAt(player);
             transform.position += new Vector3(transform.forward.x, 0, 0) * enemySpeed * Time.deltaTime;
+        }
+        else
+        {
+            transform.Translate(new Vector3(roamSpeed * Time.deltaTime * direction, 0, 0));
         }
     }
 
