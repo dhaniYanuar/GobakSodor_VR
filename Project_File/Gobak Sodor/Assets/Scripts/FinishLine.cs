@@ -15,5 +15,9 @@ public class FinishLine : MonoBehaviour
             }
             sceneLoader.ChangeScene("Level" + (sceneLoader.GetSceneIndex() + 1).ToString());
         }
+        if (other.gameObject.tag == "Ally")
+        {
+            other.GetComponent<Ally>().Standby();
+        }
     }
 }

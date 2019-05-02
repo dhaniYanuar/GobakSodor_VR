@@ -6,23 +6,23 @@ public class Enemy : MonoBehaviour
 {
     public Transform player;
 
-    private float enemySpeed = 9f;
+    private float enemySpeed = 0.5f;
     private float roamSpeed = 15f;
-    private float minDist = 60f;
+    private const float minDist = 40f;
     [SerializeField]private int direction = 1;
 
     void Update()
     {
+        
         Move();
     }
 
     private void Move()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
-        if (distance < minDist)
+        float dist = Mathf.Abs(player.position.z - transform.position.z);
+        if (dist < minDist)
         {
-            transform.LookAt(player);
-            transform.position += new Vector3(transform.forward.x, 0, 0) * enemySpeed * Time.deltaTime;
+            transform.position = new Vector3(Vector3.Lerp(transform.position, player.transform.position, enemySpeed*Time.deltaTime).x, transform.position.y, transform.position.z);
         }
         else
         {
