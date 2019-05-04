@@ -50,10 +50,14 @@ namespace EasySurvivalScripts
         float _footstepDelay;
         AudioSource _audioSource;
         float footstep_et = 0;
+        bool isPaused = false;
+
+        public bool IsPaused { get => isPaused; set => isPaused = value; }
 
         // Use this for initialization
         void Start()
         {
+            IsPaused = false;
             characterController = gameObject.GetComponentInParent<CharacterController>();
             _audioSource = gameObject.AddComponent<AudioSource>();
         }
@@ -61,6 +65,10 @@ namespace EasySurvivalScripts
         // Update is called once per frame
         void Update()
         {
+            if (IsPaused)
+            {
+                return;
+            }
             //handle controller
             HandlePlayerControls();
 
@@ -197,12 +205,6 @@ namespace EasySurvivalScripts
                 footstep_et = 0;
                 _audioSource.PlayOneShot(FootstepSounds[Random.Range(0, FootstepSounds.Count)]);
             }
-        }
-
-        public void GameOver()
-        {
-            SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
-            sceneLoader.ChangeScene("MainMenu");
         }
     }
 }

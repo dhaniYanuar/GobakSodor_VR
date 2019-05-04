@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class FinishLine : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if(gameManager.Round == 1)
         {
-            SceneLoader sceneLoader = FindObjectOfType<SceneLoader>();
-            if(sceneLoader.GetSceneIndex() == 2)
+            if (other.gameObject.tag == "Player")
             {
-                sceneLoader.ChangeScene("MainMenu");
+                gameManager.TotalArriveAtEndPoint++;
+                Debug.Log("player arrive at finish line " + gameManager.TotalArriveAtEndPoint);
+                gameManager.CheckRotateFaceAllies();
             }
-            sceneLoader.ChangeScene("Level" + (sceneLoader.GetSceneIndex() + 1).ToString());
-        }
-        if (other.gameObject.tag == "Ally")
-        {
-            other.GetComponent<Ally>().Standby();
+            if (other.gameObject.tag == "Ally")
+            {
+                gameManager.TotalArriveAtEndPoint++;
+                Debug.Log("player arrive at finish line " + gameManager.TotalArriveAtEndPoint);
+                other.GetComponent<Ally>().BackToStartLine();
+                gameManager.CheckRotateFaceAllies();
+            }
         }
     }
 }
