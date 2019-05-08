@@ -18,6 +18,11 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectsWithTag("Player")[0].transform;
+        }
+        
         if (IsPaused)
         {
             return;

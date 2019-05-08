@@ -12,15 +12,38 @@ public class GameManager : MonoBehaviour
 
     private int round;
     private int totalArriveAtEndPoint;
+    public static int characterSelected;
     private bool isPaused;
     [SerializeField] private List<GameObject> listAllies = new List<GameObject>();
     [SerializeField] private List<GameObject> listEnemies = new List<GameObject>();
     [SerializeField] private GameObject uiManager;
+    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private GameObject[] player;
 
     void Start()
     {
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            if(characterSelected == 0)
+            {
+                Instantiate(player[0], spawnPoint.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(player[1], spawnPoint.transform.position, Quaternion.identity);
+            }
+        }
+
         IsPaused = false;
         round = 1;
+        if (!PlayerPrefs.HasKey("LEVEL"))
+        {
+            PlayerPrefs.SetInt("LEVEL", round);
+        }
         AlliesUpdateRound();
     }
 
@@ -86,6 +109,10 @@ public class GameManager : MonoBehaviour
         player.IsPaused = true;
     }
 
+    public void SpawnPlayer(int _index)
+    {
+        Instantiate(player[_index], spawnPoint.transform.position, Quaternion.identity);
+    }
     // Update is called once per frame
     void Update()
     {

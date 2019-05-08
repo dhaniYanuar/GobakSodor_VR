@@ -10,7 +10,20 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject panel_victory;
     [SerializeField] private GameObject panel_fail;
+    [SerializeField] private GameObject panel_character_selection;
+    public GameObject game;
+    public Camera cam;
 
+    public void SelectCharacter(int _index)
+    {
+        GameManager gm = FindObjectOfType<GameManager>();
+        GameManager.characterSelected = _index;
+        gm.SpawnPlayer(_index);
+        panel_character_selection.SetActive(false);
+        Destroy(cam);
+        game.SetActive(true);
+        Time.timeScale = 1;
+    }
 
     public void ShowPanelVictory()
     {
@@ -39,7 +52,8 @@ public class UIManager : MonoBehaviour
 
     public void Save()
     {
-
+        GameManager gm = FindObjectOfType<GameManager>();
+        PlayerPrefs.SetInt("LEVEL", gm.Round);
     }
 
     public void RestartLevel()

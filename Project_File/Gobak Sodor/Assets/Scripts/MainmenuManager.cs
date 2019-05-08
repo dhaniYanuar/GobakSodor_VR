@@ -101,6 +101,15 @@ public class MainmenuManager : MonoBehaviour
         }
     }
 
+    public void LoadGame()
+    {
+        if (PlayerPrefs.HasKey("LEVEL"))
+        {
+            int level = PlayerPrefs.GetInt("LEVEL");
+            UnityEngine.SceneManagement.SceneManager.LoadScene(level);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
