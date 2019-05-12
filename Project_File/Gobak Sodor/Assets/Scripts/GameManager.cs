@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private bool isPaused;
     [SerializeField] private List<GameObject> listAllies = new List<GameObject>();
     [SerializeField] private List<GameObject> listEnemies = new List<GameObject>();
+    [SerializeField] private GameObject game;
     [SerializeField] private GameObject uiManager;
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private GameObject[] player;
@@ -82,6 +83,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("level complete");
             Pause();
             uiManager.GetComponent<UIManager>().ShowPanelVictory();
+            game.SetActive(false);
         }
     }
 
