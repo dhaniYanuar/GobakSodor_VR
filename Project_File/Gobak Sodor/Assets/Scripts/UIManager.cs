@@ -11,9 +11,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject panel_victory;
     [SerializeField] private GameObject panel_fail;
     [SerializeField] private GameObject panel_character_selection;
+    public Canvas canvas;
     public GameObject game;
-    public Camera cam;
+    public GameObject cam;
 
+    
     public void SelectCharacter(int _index)
     {
         GameManager gm = FindObjectOfType<GameManager>();
@@ -25,6 +27,11 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void MakeCanvasAsChild()
+    {
+        canvas.transform.parent = GameObject.FindGameObjectsWithTag("Player")[0].GetComponentInChildren<Camera>().transform;
+    }
+
     public void ShowPanelVictory()
     {
         panel_victory.SetActive(true);
@@ -33,6 +40,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowPanelFail()
     {
+        game.SetActive(false);
         panel_fail.SetActive(true);
         EventSystem.current.SetSelectedGameObject(panel_fail.transform.GetChild(panel_fail.transform.childCount - 1).gameObject);
     }
@@ -41,10 +49,12 @@ public class UIManager : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "Level1")
         {
+            Debug.Log("continue level 1");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else
         {
+            Debug.Log("back to main menu");
             SceneManager.LoadScene("MainMenu");
         }
         

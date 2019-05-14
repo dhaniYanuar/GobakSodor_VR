@@ -31,11 +31,11 @@ public class GameManager : MonoBehaviour
         {
             if(characterSelected == 0)
             {
-                Instantiate(player[0], spawnPoint.transform.position, Quaternion.identity);
+                SpawnPlayer(0);
             }
             else
             {
-                Instantiate(player[1], spawnPoint.transform.position, Quaternion.identity);
+                SpawnPlayer(1);
             }
         }
 
@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
     public void SpawnPlayer(int _index)
     {
         Instantiate(player[_index], spawnPoint.transform.position, Quaternion.identity);
+        uiManager.GetComponent<UIManager>().MakeCanvasAsChild();
     }
     // Update is called once per frame
     void Update()
