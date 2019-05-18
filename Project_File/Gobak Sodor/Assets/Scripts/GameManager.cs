@@ -19,7 +19,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject game;
     [SerializeField] private GameObject uiManager;
     [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private GameObject allySpawnPoint;
     [SerializeField] private GameObject[] player;
+    [SerializeField] private GameObject[] ally;
 
     void Start()
     {
@@ -32,10 +34,12 @@ public class GameManager : MonoBehaviour
             if(characterSelected == 0)
             {
                 SpawnPlayer(0);
+                SpawnAlly(1);
             }
             else
             {
                 SpawnPlayer(1);
+                SpawnAlly(0);
             }
         }
 
@@ -115,7 +119,41 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(player[_index], spawnPoint.transform.position, Quaternion.identity);
         uiManager.GetComponent<UIManager>().MakeCanvasAsChild();
+        if (_index == 0)
+        {
+            SpawnAlly(1);
+        }
+        else
+        {
+            SpawnAlly(0);
+        }
     }
+
+    public void SpawnAlly(int _index)
+    {
+        GameObject ally3 = Instantiate(ally[_index], allySpawnPoint.transform.position, Quaternion.identity);
+        listAllies.Add(ally3);
+        ally3.tag = "Ally";
+        ally3.AddComponent<Ally>();
+        for (int i = 0; i < listEnemies.Count; i++)
+        {
+            ally3.GetComponent<Ally>().listEnemy.Add(listEnemies[i]);
+        }
+        ally3.GetComponent<Ally>().Round = Round;
+        ally3.GetComponent<Ally>().walkSpeed = 9f;
+        ally3.GetComponent<Ally>().runSpeed = 10f;
+        ally3.GetComponent<Ally>().JumpForce = 0.2f;
+        StartCoroutine(AddStartFinishAlly(ally3));
+    }
+
+    IEnumerator AddStartFinishAlly(GameObject ally3)
+    {
+        yield return new WaitForSeconds(1f);
+        ally3.transform.parent = GameObject.Find("Game").transform;
+        ally3.GetComponent<Ally>().startLane = FindObjectOfType<StartLine>().gameObject;
+        ally3.GetComponent<Ally>().finishLane = FindObjectOfType<FinishLine>().gameObject;
+    }
+
     // Update is called once per frame
     void Update()
     {

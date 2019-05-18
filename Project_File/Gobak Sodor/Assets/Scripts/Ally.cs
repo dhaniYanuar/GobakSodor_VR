@@ -12,14 +12,12 @@ public class Ally : MonoBehaviour
     [Range(0f, 15f)]
     public float JumpForce;
     public Transform FootLocation;
-    [SerializeField]
-    private List<GameObject> listEnemy = new List<GameObject>();
-    [SerializeField]
-    private GameObject finishLane;
-    [SerializeField]
-    private GameObject startLane;
+    
+    public List<GameObject> listEnemy = new List<GameObject>();
+    public GameObject finishLane;
+    public GameObject startLane;
     private int direction = 1;
-    private int round;
+    [SerializeField]private int round;
     private bool isPaused;
 
     public int Round { get => round; set => round = value; }
