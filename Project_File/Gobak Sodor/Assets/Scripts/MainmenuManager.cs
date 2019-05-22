@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class MainmenuManager : MonoBehaviour
 {
     // Start is called before the first frame update
-
-    [SerializeField] private EventSystem eventSystem;
+    
     [SerializeField] private GameObject panel_mainmenu;
     [SerializeField] private GameObject panel_credits;
     [SerializeField] private GameObject panel_settings;
@@ -63,14 +62,28 @@ public class MainmenuManager : MonoBehaviour
 
     private void SetSelectableObject(GameObject _object)
     {
+        int indexInteractableObject = -1;
         for (int i = 0; i < _object.transform.childCount; i++)
         {
             Button btn = _object.transform.GetChild(i).gameObject.GetComponent(typeof(Button)) as Button;
-            if (btn == null)
+            Slider sld = _object.transform.GetChild(i).gameObject.GetComponent(typeof(Slider)) as Slider;
+            if (btn != null || sld != null)
             {
-                eventSystem.SetSelectedGameObject(_object.transform.GetChild(i).gameObject);
+                Debug.Log(_object.transform.GetChild(i).gameObject.name);
+                //EventSystem.current.SetSelectedGameObject(_object.transform.GetChild(i).gameObject);
+                indexInteractableObject = i;
+                break;
             }
         }
+        if (indexInteractableObject != -1)
+        {
+            EventSystem.current.SetSelectedGameObject(_object.transform.GetChild(indexInteractableObject).gameObject);
+        }
+        else
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+
     }
 
     public void QuitGame()
