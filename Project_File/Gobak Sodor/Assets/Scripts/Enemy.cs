@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour
 {
     public Transform player;
 
-    private float enemySpeed = 0.5f;
-    private float roamSpeed = 15f;
+    [SerializeField]private float enemySpeed = 0.5f;
+    [SerializeField]private float roamSpeed = 15f;
     private const float minDist = 40f;
     private bool isPaused = false;
     [SerializeField]private int direction = 1;

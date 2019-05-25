@@ -11,6 +11,12 @@ public class FinishLine : MonoBehaviour
         {
             if (other.gameObject.tag == "Player")
             {
+                if(gameManager.Level > 2)
+                {
+                    UIManager ui = FindObjectOfType<UIManager>();
+                    gameManager.game.gameObject.SetActive(false);
+                    ui.ShowPanelVictory();
+                }
                 gameManager.TotalArriveAtEndPoint++;
                 Debug.Log("player arrive at finish line " + gameManager.TotalArriveAtEndPoint);
                 gameManager.CheckRotateFaceAllies();

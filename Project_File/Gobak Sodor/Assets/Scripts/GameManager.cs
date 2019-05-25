@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,14 +10,17 @@ public class GameManager : MonoBehaviour
     public int Round { get => round; set => round = value; }
     public int TotalArriveAtEndPoint { get => totalArriveAtEndPoint; set => totalArriveAtEndPoint = value; }
     public bool IsPaused { get => isPaused; set => isPaused = value; }
+    public int Level { get => level; set => level = value; }
+
+    public GameObject game;
 
     private int round;
     private int totalArriveAtEndPoint;
     public static int characterSelected;
     private bool isPaused;
+    private int level;
     [SerializeField] private List<GameObject> listAllies = new List<GameObject>();
     [SerializeField] private List<GameObject> listEnemies = new List<GameObject>();
-    [SerializeField] private GameObject game;
     [SerializeField] private GameObject uiManager;
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private GameObject allySpawnPoint;
@@ -25,7 +29,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex == 1)
+        Level = SceneManager.GetActiveScene().buildIndex;
+        if(Level == 1)
         {
             Time.timeScale = 0;
         }
@@ -45,9 +50,9 @@ public class GameManager : MonoBehaviour
 
         IsPaused = false;
         round = 1;
-        if (!PlayerPrefs.HasKey("LEVEL"))
+        if (!PlayerPrefs.HasKey("LEVEL") && Level < 3)
         {
-            PlayerPrefs.SetInt("LEVEL", round);
+            PlayerPrefs.SetInt("LEVEL", Level);
         }
         AlliesUpdateRound();
     }
@@ -131,19 +136,23 @@ public class GameManager : MonoBehaviour
 
     public void SpawnAlly(int _index)
     {
-        GameObject ally3 = Instantiate(ally[_index], allySpawnPoint.transform.position, Quaternion.identity);
-        listAllies.Add(ally3);
-        ally3.tag = "Ally";
-        ally3.AddComponent<Ally>();
-        for (int i = 0; i < listEnemies.Count; i++)
+        if(Level < 3)
         {
-            ally3.GetComponent<Ally>().listEnemy.Add(listEnemies[i]);
+            GameObject ally3 = Instantiate(ally[_index], allySpawnPoint.transform.position, Quaternion.identity);
+            listAllies.Add(ally3);
+            ally3.tag = "Ally";
+            ally3.AddComponent<Ally>();
+            for (int i = 0; i < listEnemies.Count; i++)
+            {
+                ally3.GetComponent<Ally>().listEnemy.Add(listEnemies[i]);
+            }
+            ally3.GetComponent<Ally>().Round = Round;
+            ally3.GetComponent<Ally>().walkSpeed = 9f;
+            ally3.GetComponent<Ally>().runSpeed = 10f;
+            ally3.GetComponent<Ally>().JumpForce = 0.2f;
+            StartCoroutine(AddStartFinishAlly(ally3));
         }
-        ally3.GetComponent<Ally>().Round = Round;
-        ally3.GetComponent<Ally>().walkSpeed = 9f;
-        ally3.GetComponent<Ally>().runSpeed = 10f;
-        ally3.GetComponent<Ally>().JumpForce = 0.2f;
-        StartCoroutine(AddStartFinishAlly(ally3));
+        
     }
 
     IEnumerator AddStartFinishAlly(GameObject ally3)

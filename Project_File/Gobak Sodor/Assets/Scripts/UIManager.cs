@@ -52,6 +52,14 @@ public class UIManager : MonoBehaviour
             Debug.Log("continue level 1");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+        else if(SceneManager.GetActiveScene().name == "Trial1")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else if (SceneManager.GetActiveScene().name == "Trial2")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
         else
         {
             Debug.Log("back to main menu");
@@ -63,7 +71,7 @@ public class UIManager : MonoBehaviour
     public void Save()
     {
         GameManager gm = FindObjectOfType<GameManager>();
-        PlayerPrefs.SetInt("LEVEL", gm.Round);
+        PlayerPrefs.SetInt("LEVEL", gm.Level);
     }
 
     public void RestartLevel()

@@ -22,7 +22,22 @@ ModelImporter:
     3300000: Cube.001
     4300000: Cube.001
     10800000: Sun
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Emission Material
+    second: {fileID: 2100000, guid: 478f00245fa0ba94e99656ad3b232c8f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Emission Material.001
+    second: {fileID: 2100000, guid: 86b3f95c6b580274a816ea9ac1bc0ee6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Field Material
+    second: {fileID: 2100000, guid: bb604a516b121124892cb7502d0ec292, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

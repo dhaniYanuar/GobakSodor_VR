@@ -40,17 +40,9 @@ public class MainmenuManager : MonoBehaviour
 
     public void ShowPanelTutorial(bool _active)
     {
-        isOpenTutorial = _active;
+        panel_mainmenu.SetActive(!_active);
         panel_tutorial.SetActive(_active);
-        if (_active)
-        {
-            SetSelectableObject(panel_tutorial);
-        }
-        else
-        {
-            SetSelectableObject(panel_settings);
-        }
-        
+        SetSelectableObject(panel_tutorial);
     }
 
     public void ShowPanelQuit(bool _active)
@@ -59,6 +51,7 @@ public class MainmenuManager : MonoBehaviour
         panel_quit.SetActive(_active);
         SetSelectableObject(panel_quit);
     }
+
 
     private void SetSelectableObject(GameObject _object)
     {
