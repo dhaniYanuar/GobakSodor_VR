@@ -15,13 +15,35 @@ public class MainmenuManager : MonoBehaviour
     [SerializeField] private GameObject panel_quit;
     [SerializeField] private Button btn_start;
     [SerializeField] private List<GameObject> listOfTutorialContent = new List<GameObject>();
-    bool isOpenTutorial;
+    [SerializeField] private List<GameObject> listTrial = new List<GameObject>();
+    bool isOpenTrialInfo;
     int indexTutorial;
     void Start()
     {
-        isOpenTutorial = false;
+        isOpenTrialInfo = false;
         indexTutorial = 0;
         panel_mainmenu.SetActive(true);
+    }
+
+    public void ShowTrialInfo(int _idTrial)
+    {
+        isOpenTrialInfo = true;
+        panel_tutorial.SetActive(false);
+        foreach (var trial in listTrial)
+        {
+            trial.SetActive(false);
+        }
+        listTrial[_idTrial - 1].SetActive(true);
+        SetSelectableObject(listTrial[_idTrial - 1]);
+    }
+
+    public void HideAllTrialInfo()
+    {
+        foreach (var trial in listTrial)
+        {
+            trial.SetActive(false);
+        }
+        panel_tutorial.SetActive(true);
     }
 
     public void ShowPanelCredits(bool _active)
@@ -117,27 +139,26 @@ public class MainmenuManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetButton("Cancel"))
         {
-            ShowPanelCredits(false);
-            ShowPanelQuit(false);
-            ShowPanelSettings(false);
-            ShowPanelTutorial(false);
-            btn_start.Select();
-        }
-        else if (Input.GetAxis("Horizontal") > 0 && isOpenTutorial)
-        {
-            indexTutorial++;
-            UpdateTutorialContent();
-            return;
-        }
-        else if (Input.GetAxis("Horizontal") < 0 && isOpenTutorial)
-        {
-            indexTutorial--;
-            UpdateTutorialContent();
-            return;
+            if (isOpenTrialInfo)
+            {
+                HideAllTrialInfo();
+                SetSelectableObject(panel_tutorial);
+                Debug.Log("XXXXXXXXXXXXXXXX");
+                isOpenTrialInfo = false;
+            }
+            else
+            {
+                ShowPanelCredits(false);
+                ShowPanelQuit(false);
+                ShowPanelSettings(false);
+                ShowPanelTutorial(false);
+                btn_start.Select();
+                Debug.Log("------------------");
+            }
         }
     }
 }
