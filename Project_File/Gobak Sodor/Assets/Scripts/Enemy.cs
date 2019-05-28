@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            transform.Translate(new Vector3(roamSpeed * Time.deltaTime * direction, 0, 0));
+            //transform.Translate(new Vector3(roamSpeed * Time.deltaTime * direction, 0, 0));
         }
     }
 
